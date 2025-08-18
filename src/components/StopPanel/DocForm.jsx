@@ -1,12 +1,12 @@
 // components/StopPanel/DocForm.jsx
 import React from "react";
+import { Camera, UploadCloud } from "lucide-react";
 import FilePicker from "./FilePicker";
-import { UploadCloud } from "lucide-react";
 
 const DocForm = ({ doc, onChange }) => {
   const sendMail = () => alert(`Mail sent for Document ${doc.id}`);
 
-  const mergeFiles = (fileList) => {
+  const addScannedFiles = (fileList) => {
     const newFiles = Array.from(fileList);
     const newPreviews = newFiles.map((f) => URL.createObjectURL(f));
     onChange({
@@ -60,6 +60,8 @@ const DocForm = ({ doc, onChange }) => {
           Attach to Invoice
         </span>
       </label>
+
+      {/* Remarks */}
       <label className="block text-sm font-semibold text-gray-700 mb-1">
         Remarks
       </label>
@@ -71,52 +73,65 @@ const DocForm = ({ doc, onChange }) => {
         rows={2}
       />
 
-      {/* File Picker */}
-      <div className="mb-3">
+      {/* Scan Document Button */}
+      <div className="mb-2">
         <FilePicker
           label={
             <span className="flex items-center gap-2 font-medium">
-              <UploadCloud className="w-5 h-5" />
-              Upload Documents
+              <Camera className="w-5 h-5" />
+              Scan Document
             </span>
           }
-          onFiles={mergeFiles}
-          variant="blue"
+          onFiles={addScannedFiles}
+          variant="outline"
+          capture="environment"
         />
       </div>
 
-      {/* Documents/Preview */}
-      {doc.previews.length === 0 ? (
-        <div className="text-gray-400 mb-2 text-sm">No Documents</div>
-      ) : (
-        <>
-          <div className="text-xs text-gray-500 mt-2 mb-1">
-            Scanned Documents
-          </div>
-          <div className="flex gap-2 overflow-x-auto pb-1">
-            {doc.previews.map((src, i) => (
-              <div
-                className="relative w-20 h-20 rounded-lg shadow border"
-                key={i}
-              >
-                <img
-                  src={src}
-                  alt={`Doc ${doc.id} ${i + 1}`}
-                  className="w-full h-full object-cover"
-                />
-                <button
-                  type="button"
-                  className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center"
-                  onClick={() => deleteAt(i)}
-                  aria-label="Delete"
+      {/* Scanned Documents Preview */}
+      <div className="mb-2">
+        {doc.previews.length === 0 ? (
+          <div className="text-gray-400 text-sm">No Documents</div>
+        ) : (
+          <>
+            <div className="text-xs text-gray-500 mb-1">Scanned Documents</div>
+            <div className="flex gap-2 overflow-x-auto pb-1">
+              {doc.previews.map((src, i) => (
+                <div
+                  className="relative w-20 h-20 rounded-lg shadow border flex-shrink-0"
+                  key={i}
                 >
-                  ✕
-                </button>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+                  <img
+                    src={src}
+                    alt={`Doc ${doc.id} ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    className="absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center"
+                    onClick={() => deleteAt(i)}
+                    aria-label="Delete"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Upload Documents Button */}
+      <FilePicker
+        label={
+          <span className="flex items-center gap-2 font-medium">
+            <UploadCloud className="w-5 h-5" />
+            Upload Documents
+          </span>
+        }
+        onFiles={addScannedFiles} // Bind your API call here if needed
+        variant="blue"
+      />
     </div>
   );
 };

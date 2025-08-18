@@ -1,5 +1,5 @@
 // components/StopPanel/StopPanel.jsx
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronUp } from "lucide-react";
 import React, { useState } from "react";
 import DocForm from "./DocForm";
 
@@ -31,66 +31,74 @@ const StopPanel = ({ stop, onChange }) => {
   };
 
   return (
-    <section className="rounded-xl shadow border bg-white mb-4 overflow-hidden">
-      {/* Header Row */}
-      <div className="flex items-center justify-between p-3">
-        <div>
-          <span className="text-[15px] font-semibold">
-            {local.receiverName}
-          </span>
-          <span className="text-gray-500"> | {local.phone}</span>
+    <section className="rounded-2xl shadow border border-gray-200 bg-white mb-5 overflow-hidden max-w-full">
+      <div className="bg-gray-50 px-4 pt-4 pb-2 rounded-t-2xl flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          {/* Receiver name and phone */}
+          <div>
+            <div className="text-base font-bold text-gray-800">
+              {local.receiverName}{" "}
+              <span className="font-normal text-gray-700">| {local.phone}</span>
+            </div>
+            <div className="text-xs text-gray-500 mt-1">{local.address}</div>
+            <div className="text-xs text-gray-500">{local.time}</div>
+          </div>
         </div>
+
+        {/* Expand / Collapse toggle */}
         <button
           onClick={toggleExpand}
-          className="focus:outline-none text-gray-600"
+          aria-label={
+            local.expanded ? "Collapse documents" : "Expand documents"
+          }
+          className="text-gray-600 hover:text-gray-900 focus:outline-none"
         >
-          {local.expanded ? <ChevronUp /> : <ChevronDown />}
+          {local.expanded ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
         </button>
       </div>
 
-      {/* Stop Meta Info */}
-      <div className="border-t border-gray-200 px-3 pb-3">
-        <div className="text-sm text-gray-500">{local.address}</div>
-        <div className="text-sm text-gray-500">{local.time}</div>
-        {/* Chips Section */}
-        <div className="flex flex-wrap gap-2 mt-2">
+      {/* Documents selection list, only if expanded */}
+      {local.expanded && (
+        <div className="flex items-center gap-2 px-4 py-2 border-t border-gray-200 bg-white">
+          {/* All checkbox */}
           <label
-            className={`px-2 py-1 rounded-full border text-sm cursor-pointer transition 
-            ${
-              local.allSelected
-                ? "bg-blue-100 border-blue-400 text-blue-700 font-bold"
-                : "bg-gray-100 border-gray-300 text-gray-700"
-            }
-          `}
+            className={`flex items-center gap-1 px-2 py-1 rounded-lg cursor-pointer text-xs font-medium transition`}
           >
             <input
               type="checkbox"
+              className="accent-green-500 w-4 h-4 cursor-pointer"
               checked={local.allSelected}
               onChange={(e) => toggleAll(e.target.checked)}
-              className="hidden"
             />
             All
           </label>
-          {local.docs.map((d) => (
-            <label
-              key={d.id}
-              className={`px-2 py-1 rounded-full border text-sm cursor-pointer transition
-              ${
-                local.selectedDocIds.has(d.id)
-                  ? "bg-blue-100 border-blue-400 text-blue-700 font-bold"
-                  : "bg-gray-100 border-gray-300 text-gray-700"
-              }
-            `}
-            >
-              <input
-                type="checkbox"
-                checked={local.selectedDocIds.has(d.id)}
-                onChange={(e) => toggleOne(d.id, e.target.checked)}
-                className="hidden"
-              />
-              {d.id}
-            </label>
-          ))}
+
+          {/* Individual document checkboxes */}
+          {local.docs.map((doc) => {
+            const checked = local.selectedDocIds.has(doc.id);
+            return (
+              <label
+                key={doc.id}
+                className={`flex items-center gap-1 px-2 py-1 rounded-lg cursor-pointer text-xs font-medium transition`}
+              >
+                <input
+                  type="checkbox"
+                  className="accent-green-500 w-4 h-4 cursor-pointer"
+                  checked={checked}
+                  onChange={(e) => toggleOne(doc.id, e.target.checked)}
+                />
+                {doc.id}
+              </label>
+            );
+          })}
+        </div>
+      )}
+      <div className="w-full bg-gray-100 border-b-1 p-1">
+        <div className="mt-1 mx-4 flex justify-between text-md font-medium">
+          <span className="font-bold">Documents</span>
+          <span className="font-medium text-gray-600">
+            {local.docs.length} items
+          </span>
         </div>
       </div>
 
