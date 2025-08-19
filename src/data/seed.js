@@ -9,8 +9,7 @@ export const initialStops = [
         selectedDocIds: new Set(["67289", "35655555", "848383"]),
         docs: [
             { id: "67289", status: "Delivered", attachToInvoice: true, remarks: "good", files: [], previews: [] },
-            { id: "35655555", status: "Delivered", attachToInvoice: true, remarks: "good", files: [], previews: [] },
-            { id: "848383", status: "Delivered", attachToInvoice: true, remarks: "", files: [], previews: [] },
+            
         ],
     },
 ]
