@@ -1,16 +1,1 @@
 @import "tailwindcss";
-
-/* Small reusable patterns to keep JSX clean */
-@layer components {
-  .card        { @apply bg-white border border-gray-200 rounded-2xl; }
-  .btn         { @apply inline-flex items-center justify-center font-semibold rounded-xl px-4 py-3; }
-  .btn-primary { @apply btn bg-brand text-white hover:bg-brand-dark active:bg-brand-dark; }
-  .btn-ghost   { @apply btn bg-white border border-gray-200; }
-  .btn-outline { @apply btn bg-gray-50 border border-gray-200; }
-  .field-label { @apply text-sm font-medium text-gray-700; }
-  .input       { @apply w-full rounded-xl border border-gray-200 px-3 py-3 text-[15px]; }
-  .textarea    { @apply input min-h-[96px]; }
-  .chip        { @apply inline-flex items-center gap-2 rounded-full border border-gray-200 px-3 py-1.5 text-xs; }
-  .thumb       { @apply relative w-24 h-20 border border-gray-200 rounded-lg overflow-hidden bg-gray-100; }
-  .thumb-x     { @apply absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500 text-white text-[10px] flex items-center justify-center; }
-}
