@@ -1,0 +1,22 @@
+{
+  "verification_header": "输入验证码",
+  "verification_message": "我们已将职位验证码发送至",
+  "code_expires_in": "代码过期时间为",
+  "code_expired": "代码已过期？",
+  "resend": "重新发送",
+  "verify": "核实",
+  "otp_alert": "请输入4位数的OTP代码",
+  "trip_id": "行程编号",
+  "documents": "文件",
+  "items": "项目",
+  "delivered": "发表",
+  "in_transit": "在途中",
+  "pending": "待办的",
+  "attach_to_invoice": "附于发票",
+  "remarks": "评论",
+  "scan_document": "扫描文件",
+  "upload_documents": "上传文件",
+  "no_documents": "没有文件",
+  "scanned_documents": "扫描文件",
+  "send_mail": "发送邮件"
+}

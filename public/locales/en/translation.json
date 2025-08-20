@@ -1,0 +1,22 @@
+{
+  "verification_header": "Enter Verification Code",
+  "verification_message": "We’ve sent job verification code to",
+  "code_expires_in": "Code expires in",
+  "code_expired": "Code expired?",
+  "resend": "Resend",
+  "verify": "Verify",
+  "otp_alert": "Please enter the 4-digit OTP code",
+  "trip_id": "Trip Id",
+  "documents": "Documents",
+  "items": "items",
+  "delivered": "Delivered",
+  "in_transit": "In Transit",
+  "pending": "Pending",
+  "attach_to_invoice": "Attach to Invoice",
+  "remarks": "Remarks",
+  "scan_document": "Scan Document",
+  "upload_documents": "Upload Documents",
+  "no_documents": "No Documents",
+  "scanned_documents": "Scanned Documents",
+  "send_mail": "Send Mail"
+}

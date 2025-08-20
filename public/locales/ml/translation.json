@@ -1,0 +1,22 @@
+{
+  "verification_header": "Masukkan Kod Pengesahan",
+  "verification_message": "Kami telah menghantar kod pengesahan kerja kepada",
+  "code_expires_in": "Kod tamat tempoh dalam",
+  "code_expired": "Kod tamat tempoh?",
+  "resend": "Hantar semula",
+  "verify": "Sahkan",
+  "otp_alert": "Sila masukkan kod OTP 4 digit",
+  "trip_id": "Id Perjalanan",
+  "documents": "Dokumen",
+  "items": "barang",
+  "delivered": "Dihantar",
+  "in_transit": "Dalam Transit",
+  "pending": "Belum selesai",
+  "attach_to_invoice": "Lampirkan pada Invois",
+  "remarks": "Teguran",
+  "scan_document": "Imbas Dokumen",
+  "upload_documents": "Muat Naik Dokumen",
+  "no_documents": "Tiada Dokumen",
+  "scanned_documents": "Dokumen yang Diimbas",
+  "send_mail": "Hantar Mel"
+}

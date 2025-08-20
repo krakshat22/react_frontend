@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.jpg";
+import { useTranslation } from "react-i18next";
+import LanguageSelector from "../components/LanguageSelector";
+import Footer from "../components/common/Footer";
 
 const OtpVerification = () => {
   const [otp, setOtp] = useState(["", "", "", ""]);
@@ -8,6 +11,8 @@ const OtpVerification = () => {
   const [secondsLeft, setSecondsLeft] = useState(30);
   const [expired, setExpired] = useState(false);
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (secondsLeft === 0) {
@@ -77,10 +82,10 @@ const OtpVerification = () => {
         />
 
         <h2 className="text-center text-2xl font-semibold text-gray-900">
-          Enter Verification Code
+          {t("verification_header")}
         </h2>
         <p className="text-center text-gray-500 mt-2">
-          We’ve sent job verification code to <br />
+          <span className="mx-1">{t("verification_message")}</span> <br />
           <span className="font-semibold text-gray-700">+60 55511 12456</span>
         </p>
 
@@ -104,12 +109,12 @@ const OtpVerification = () => {
 
         {/* Timer */}
         <div className="text-center text-gray-500 text-sm mb-1 relative">
-          Code expires in {formatTime(secondsLeft)}
+          {t("code_expires_in")} {formatTime(secondsLeft)}
         </div>
 
         {/* Resend link */}
         <div className="text-center text-sm mb-6">
-          Code expired?{" "}
+          {t("code_expired")}{" "}
           <button
             className={`font-medium ${
               expired ? "text-blue-600" : "text-gray-300 cursor-not-allowed"
@@ -117,7 +122,7 @@ const OtpVerification = () => {
             onClick={handleResend}
             disabled={!expired}
           >
-            Resend
+            {t("resend")}
           </button>
         </div>
 
@@ -127,17 +132,15 @@ const OtpVerification = () => {
             onClick={handleVerify}
             className="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-3 rounded-xl shadow text-lg"
           >
-            Verify
+            {t("verify")}
           </button>
         </div>
         <div className="flex justify-center mb-8">
-          <select className="border border-gray-300 rounded px-3 py-1 text-base bg-gray-200">
-            <option>English</option>
-            <option>Malay</option>
-            <option>Chinese</option>
-          </select>
+          <LanguageSelector />
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 };
