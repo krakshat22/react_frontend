@@ -1,10 +1,15 @@
 // components/StopPanel/StopPanel.jsx
-import { ChevronDown, ChevronLeft, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronUp, Plus } from "lucide-react";
 import React, { useState } from "react";
 import DocForm from "./DocForm";
+import Button from "../common/Button";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const StopPanel = ({ stop, onChange }) => {
   const [local, setLocal] = useState(stop);
+  const {t} = useTranslation()
+  const navigate = useNavigate();
   const sync = (draft) => {
     setLocal(draft);
     onChange(JSON.parse(JSON.stringify(draft)));
@@ -28,6 +33,25 @@ const StopPanel = ({ stop, onChange }) => {
     const docs = [...local.docs];
     docs[idx] = { ...docs[idx], ...patch };
     sync({ ...local, docs });
+  };
+
+  const handleUpload = async (docToUpload) => {
+    // navigate("/upload-success", {
+    //   state: {
+    //     tripId: local.tripId, // or fetch from your stop object
+    //     dateTime: new Date().toLocaleString(),
+    //     message: "Your document has been successfully uploaded to our system",
+    //   },
+    // });
+
+    navigate("/upload-success", {
+      state: {
+        tripId: local.tripId,
+        dateTime: new Date().toLocaleString(),
+        message:
+          "We couldn't upload your document. Please check your connection and try again.",
+      },
+    });
   };
 
   return (
@@ -95,24 +119,35 @@ const StopPanel = ({ stop, onChange }) => {
       )}
       <div className="w-full bg-gray-100 border-b-1 p-1">
         <div className="mt-1 mx-4 flex justify-between text-md font-medium">
-          <span className="font-bold">Documents</span>
+          <span className="font-bold">{t("documents")}</span>
           <span className="font-medium text-gray-600">
-            {local.docs.length} items
+            {local.docs.length} {t("items")}
           </span>
         </div>
       </div>
 
       {/* Expanded Doc Forms */}
       {local.expanded && (
-        <div className="border-t border-gray-200 p-3">
-          {local.docs.map((doc, i) => (
-            <DocForm
-              key={doc.id}
-              doc={doc}
-              onChange={(next) => patchDoc(i, next)}
+        <>
+          <div className="border-t border-gray-200 p-3">
+            {local.docs.map((doc, i) => (
+              <DocForm
+                key={doc.id}
+                doc={doc}
+                onChange={(next) => patchDoc(i, next)}
+                onUpload={handleUpload}
+              />
+            ))}
+            <Button
+              content={t("add_new_document")}
+              icon={<Plus size={20} />}
+              bgColor="bg-blue-50"
+              textColor="text-blue-500"
+              hoverBgColor="hover:bg-blue-50"
+              className="py-2"
             />
-          ))}
-        </div>
+          </div>
+        </>
       )}
     </section>
   );

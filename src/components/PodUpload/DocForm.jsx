@@ -1,10 +1,13 @@
 // components/StopPanel/DocForm.jsx
 import React from "react";
-import { Camera, UploadCloud } from "lucide-react";
+import { Camera, UploadCloud, X } from "lucide-react";
 import FilePicker from "./FilePicker";
+import Button from "../common/Button";
+import { useTranslation } from "react-i18next";
 
-const DocForm = ({ doc, onChange }) => {
-  const sendMail = () => alert(`Mail sent for Document ${doc.id}`);
+const DocForm = ({ doc, onChange, onUpload }) => {
+
+  const { t } = useTranslation();
 
   const addScannedFiles = (fileList) => {
     const newFiles = Array.from(fileList);
@@ -27,7 +30,7 @@ const DocForm = ({ doc, onChange }) => {
   return (
     <div className="rounded-xl shadow-sm border bg-white p-4 mb-3">
       <label className="block text-sm font-semibold text-gray-700 mb-1">
-        Document ID {doc.id}
+        {t("document_id")} {doc.id}
       </label>
       <input
         className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 text-base focus:outline-none focus:ring focus:border-blue-400 transition"
@@ -36,7 +39,7 @@ const DocForm = ({ doc, onChange }) => {
         onChange={(e) => onChange({ ...doc, id: e.target.value })}
       />
       <label className="block text-sm font-semibold text-gray-700 mb-1">
-        Status
+        {t("status")}
       </label>
       <select
         className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 text-base focus:outline-none focus:ring focus:border-blue-400 transition"
@@ -44,8 +47,8 @@ const DocForm = ({ doc, onChange }) => {
         onChange={(e) => onChange({ ...doc, status: e.target.value })}
       >
         <option>Delivered</option>
-        <option>In Transit</option>
         <option>Pending</option>
+        <option>Shop Closed</option>
       </select>
       <label className="flex items-center gap-2 mb-2">
         <input
@@ -57,13 +60,13 @@ const DocForm = ({ doc, onChange }) => {
           className="h-4 w-4 accent-blue-600"
         />
         <span className="text-sm text-gray-700 font-medium">
-          Attach to Invoice
+          {t("attach_to_invoice")}
         </span>
       </label>
 
       {/* Remarks */}
       <label className="block text-sm font-semibold text-gray-700 mb-1">
-        Remarks
+        {t("remarks")}
       </label>
       <textarea
         className="w-full border border-gray-300 rounded-lg px-3 py-2 mb-3 text-base focus:outline-none focus:ring focus:border-blue-400 transition"
@@ -79,7 +82,7 @@ const DocForm = ({ doc, onChange }) => {
           label={
             <span className="flex items-center gap-2 font-medium">
               <Camera className="w-5 h-5" />
-              Scan Document
+              {t("scan_document")}
             </span>
           }
           onFiles={addScannedFiles}
@@ -91,10 +94,10 @@ const DocForm = ({ doc, onChange }) => {
       {/* Scanned Documents Preview */}
       <div className="mb-2">
         {doc.previews.length === 0 ? (
-          <div className="text-gray-400 text-sm">No Documents</div>
+          <div className="text-gray-400 text-sm">{t("no_documents")}</div>
         ) : (
           <>
-            <div className="text-xs text-gray-500 mb-1">Scanned Documents</div>
+            <div className="text-xs text-gray-500 mb-1">{t("scanned_documents")}</div>
             <div className="flex gap-2 overflow-x-auto pb-1">
               {doc.previews.map((src, i) => (
                 <div
@@ -112,7 +115,7 @@ const DocForm = ({ doc, onChange }) => {
                     onClick={() => deleteAt(i)}
                     aria-label="Delete"
                   >
-                    ✕
+                    <X />
                   </button>
                 </div>
               ))}
@@ -122,15 +125,11 @@ const DocForm = ({ doc, onChange }) => {
       </div>
 
       {/* Upload Documents Button */}
-      <FilePicker
-        label={
-          <span className="flex items-center gap-2 font-medium">
-            <UploadCloud className="w-5 h-5" />
-            Upload Documents
-          </span>
-        }
-        onFiles={addScannedFiles} // Bind your API call here if needed
-        variant="blue"
+      <Button
+        icon={<UploadCloud className="w-5 h-5" />}
+        content={t("upload_documents")}
+        bgColor="bg-blue-500"
+        onClick={()=> onUpload && onUpload(doc)}
       />
     </div>
   );

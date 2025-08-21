@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../assets/Logo.jpg";
+import WhatsappLogo from "../assets/Whatsapp.png";
 import { useTranslation } from "react-i18next";
 import LanguageSelector from "../components/LanguageSelector";
 import Footer from "../components/common/Footer";
 
 const OtpVerification = () => {
-  const [otp, setOtp] = useState(["", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputs = useRef([]);
   const [secondsLeft, setSecondsLeft] = useState(30);
   const [expired, setExpired] = useState(false);
@@ -50,7 +51,7 @@ const OtpVerification = () => {
       // Navigate on success
       navigate("/document-upload");
     } else {
-      alert("Please enter the 4-digit OTP code");
+      alert("Please enter the 6-digit OTP code");
     }
   };
 
@@ -75,11 +76,13 @@ const OtpVerification = () => {
         {/* Logo */}
         <img src={Logo} alt="BOSS Logo" className="w-40 mx-auto mt-8" />
         {/* WhatsApp icon */}
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
-          alt="WhatsApp Icon"
-          className="w-12 mx-auto mt-6 mb-4"
-        />
+        <div className="w-16 mx-auto mt-6 mb-4">
+          <img
+            src={WhatsappLogo}
+            alt="WhatsApp Icon"
+            className="object-cover"
+          />
+        </div>
 
         <h2 className="text-center text-2xl font-semibold text-gray-900">
           {t("verification_header")}
@@ -90,14 +93,14 @@ const OtpVerification = () => {
         </p>
 
         {/* OTP Input Boxes */}
-        <div className="flex justify-center mt-6 space-x-4 mb-4">
+        <div className="flex justify-center mt-6 space-x-2 mb-4">
           {otp.map((value, idx) => (
             <input
               key={idx}
               type="text"
               maxLength={1}
               value={value}
-              className="w-14 h-16 border border-gray-300 rounded-xl text-center text-3xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-13 h-16 border border-gray-300 rounded-xl text-center text-3xl focus:outline-none focus:ring-2 focus:ring-blue-500"
               onChange={(e) => handleChange(e, idx)}
               onKeyDown={(e) => handleKeyDown(e, idx)}
               ref={(el) => (inputs.current[idx] = el)}
@@ -108,12 +111,12 @@ const OtpVerification = () => {
         </div>
 
         {/* Timer */}
-        <div className="text-center text-gray-500 text-sm mb-1 relative">
+        <div className="text-center text-gray-500 text-md mb-3 relative">
           {t("code_expires_in")} {formatTime(secondsLeft)}
         </div>
 
         {/* Resend link */}
-        <div className="text-center text-sm mb-6">
+        <div className="text-center text-md mb-6">
           {t("code_expired")}{" "}
           <button
             className={`font-medium ${

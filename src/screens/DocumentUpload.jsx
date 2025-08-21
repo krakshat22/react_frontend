@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import StopPanel from "../components/StopPanel/StopPanel";
+import StopPanel from "../components/PodUpload/StopPanel";
 import { Mail } from "lucide-react";
 import Header from "../components/Header";
 import { initialStops } from "../data/seed";
+import { useTranslation } from "react-i18next";
 
 const DocumentUpload = () => {
   const [stops, setStops] = useState(initialStops);
+  const {t} = useTranslation()
   return (
     <div className="relative min-h-screen max-w-[680px] mx-auto px-2 pb-24">
       <Header />
@@ -26,7 +28,7 @@ const DocumentUpload = () => {
           onClick={() => {}}
         >
           <Mail className="w-6 h-6" />
-          Send Mail
+          {t("send_mail")}
         </button>
       </div>
     </div>
